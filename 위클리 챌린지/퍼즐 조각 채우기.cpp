@@ -32,7 +32,6 @@ bool operator<(const Coord &a, const Coord &b)
 class Block
 {
 public:
-	bool isUsed = false;
 	vector<Coord> coords;
 
 	void addCoords(Coord coord)
@@ -47,7 +46,7 @@ public:
 
 		vector<Coord> tempCoords;
 
-		// 90µµ È¸Àü
+		// 90ÂµÂµ ÃˆÂ¸Ã€Ã¼
 		// https://calcworkshop.com/transformations/rotation-rules/
 		for (Coord coord : coords)
 		{
@@ -311,7 +310,7 @@ void func(int idx, int cnt)
 }
 
 int solution(vector<vector<int>> game_board, vector<vector<int>> table) {
-	// ÀüÃ³¸®
+	// Ã€Ã¼ÃƒÂ³Â¸Â®
 	init(game_board, table);
 	getCandidates();
 	getEmptyBlocks();
