@@ -1,0 +1,6 @@
+SELECT
+    ANIMAL_ID,
+    NAME,
+    LEFT(DATETIME, 10) AS 날짜
+FROM
+    ANIMAL_INS
