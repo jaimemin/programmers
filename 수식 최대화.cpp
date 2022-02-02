@@ -67,43 +67,15 @@ long long solution(string expression) {
 
 				int priority = op2priority[opTemp];
 
-				switch (priority)
+				while (!st.empty()
+					&& op2priority.count(st.top())
+					&& op2priority[st.top()] >= priority)
 				{
-				case 2:
-					while (!st.empty()
-						&& op2priority.count(st.top())
-						&& op2priority[st.top()] == priority)
-					{
-						postfix.push_back(st.top());
-						st.pop();
-					}
-
-					st.push(opTemp);
-
-					break;
-				case 1:
-					while (!st.empty()
-						&& op2priority.count(st.top())
-						&& op2priority[st.top()] >= priority)
-					{
-						postfix.push_back(st.top());
-						st.pop();
-					}
-
-					st.push(opTemp);
-
-					break;
-				case 0:
-					while (!st.empty())
-					{
-						postfix.push_back(st.top());
-						st.pop();
-					}
-
-					st.push(opTemp);
-
-					break;
+					postfix.push_back(st.top());
+					st.pop();
 				}
+
+				st.push(opTemp);
 			}
 		}
 
