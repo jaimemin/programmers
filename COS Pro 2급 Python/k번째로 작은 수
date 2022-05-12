@@ -1,0 +1,11 @@
+
+def solution(arr, k):
+    temp = []
+    
+    for i in range(len(arr)):
+        for j in range(len(arr[0])):
+            temp.append(arr[i][j])
+            
+    temp.sort()
+    
+    return temp[k - 1]
