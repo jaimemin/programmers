@@ -18,16 +18,16 @@ long long getFactorial(int n) {
 vector<int> solution(int n, long long k) {
 	vector<int> answer;
 	vector<int> v;
-	int cnt = 1;
+	int answerIdx = 1;
 
 	for (int i = 1; i <= n; i++)
 	{
 		v.push_back(i);
 	}
 
-	while (cnt != n)
+	while (answerIdx < n)
 	{
-		long long factorial = getFactorial(n - cnt++);
+		long long factorial = getFactorial(n - answerIdx++);
 		int idx = (k - 1) / factorial;
 
 		answer.push_back(v[idx]);
