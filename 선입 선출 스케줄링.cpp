@@ -50,6 +50,7 @@ int solution(int n, vector<int> cores) {
 		}
 		else if (diff >= n)
 		{
+			// diff > n이 아니라 diff >= n인 이유는 if (mid % cores[i] == 0)을 먼저 체크하기 때문에
 			right = mid - 1;
 		}
 		else
