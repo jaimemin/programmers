@@ -2,15 +2,16 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#include <climits>
 using namespace std;
 
-const int MAX = 200 + 20;
+const int MAX = 200 + 1;
 
 const int INF = 2e6 + 2e3;
 
 vector<pair<int, int>> edges[MAX];
 
-int dijkstra(int start, int end)
+vector<int> dijkstra(int start)
 {
 	vector<int> distance(MAX, INF);
 	distance[start] = 0;
@@ -43,7 +44,7 @@ int dijkstra(int start, int end)
 		}
 	}
 
-	return distance[end];
+	return distance;
 }
 
 int solution(int n, int s, int a, int b, vector<vector<int>> fares) {
@@ -57,16 +58,14 @@ int solution(int n, int s, int a, int b, vector<vector<int>> fares) {
 		edges[v].push_back({ u, cost });
 	}
 
-	int answer = dijkstra(s, a) + dijkstra(s, b);
+	vector<int> sDistance = dijkstra(s);
+	int answer = INT_MAX;
 
-	for (int i = 1; i <= n; i++)
+	for (int vertex = 1; vertex <= n; vertex++)
 	{
-		if (s == i)
-		{
-			continue;
-		}
+		vector<int> vDistance = dijkstra(vertex);
 
-		answer = min(answer, dijkstra(s, i) + dijkstra(i, a) + dijkstra(i, b));
+		answer = min(answer, vDistance[a] + vDistance[b] + sDistance[vertex]);
 	}
 
 	return answer;
