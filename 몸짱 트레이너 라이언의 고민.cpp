@@ -24,9 +24,9 @@ bool canPlaceFurther(pair<int, int> coord, int maxDistance, vector<pair<int, int
 	return true;
 }
 
-// Àü¿ª º¯¼ö¸¦ Á¤ÀÇÇÒ °æ¿ì ÇÔ¼ö ³»¿¡ ÃÊ±âÈ­ ÄÚµå¸¦ ²À ÀÛ¼ºÇØÁÖ¼¼¿ä.
+// ì „ì—­ ë³€ìˆ˜ë¥¼ ì •ì˜í•  ê²½ìš° í•¨ìˆ˜ ë‚´ì— ì´ˆê¸°í™” ì½”ë“œë¥¼ ê¼­ ìž‘ì„±í•´ì£¼ì„¸ìš”.
 int solution(int n, int m, vector<vector<int>> timetable) {
-	int numberOfPeople[MAX];
+	int numberOfPeople[MAX] = { 0, };
 	int start = INT_MAX;
 	int end = 0;
 
@@ -63,7 +63,7 @@ int solution(int n, int m, vector<vector<int>> timetable) {
 
 				for (int y2 = y; y2 < n; y2++)
 				{
-					for (int x2 = x; x2 < n; x2++)
+					for (int x2 = 0; x2 < n; x2++)
 					{
 						if (y2 == y && x2 <= x)
 						{
@@ -73,11 +73,11 @@ int solution(int n, int m, vector<vector<int>> timetable) {
 						if (canPlaceFurther({ y2, x2 }, distance, people))
 						{
 							people.push_back({ y2, x2 });
+						}
 
-							if (people.size() == maxCrowded)
-							{
-								return distance;
-							}
+						if (people.size() == maxCrowded)
+						{
+							return distance;
 						}
 					}
 				}
