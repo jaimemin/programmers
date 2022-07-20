@@ -55,7 +55,7 @@ string solution(string play_time, string adv_time, vector<string> logs) {
 	int adTime = convertTimeToSeconds(adv_time);
 	long long watchTime = 0;
 
-	for (int t = 1; t <= adTime + 1; t++)
+	for (int t = 0; t <= adTime; t++)
 	{
 		watchTime += arr[t];
 	}
@@ -63,7 +63,7 @@ string solution(string play_time, string adv_time, vector<string> logs) {
 	long long temp = watchTime;
 	int maxTime = convertTimeToSeconds(play_time);
 
-	for (int t = 2, t2 = adTime + 2; t2 <= maxTime; t++, t2++)
+	for (int t = 1, t2 = adTime + 1; t2 <= maxTime; t++, t2++)
 	{
 		temp -= arr[t];
 		temp += arr[t2];
