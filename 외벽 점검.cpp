@@ -28,14 +28,14 @@ int solution(int n, vector<int> weak, vector<int> dist) {
 
 			for (int j = 0; j < dist.size(); j++)
 			{
-				if (right - left <= dist[j])
+				if (left + dist[j] >= right)
 				{
 					answer = min(answer, j + 1);
 
 					break;
 				}
 
-				for (int k = idx + 1; weakSize * 2; k++)
+				for (int k = idx + 1; ; k++)
 				{
 					if (left + dist[j] < weak[k])
 					{
