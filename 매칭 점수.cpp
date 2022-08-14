@@ -159,6 +159,11 @@ int solution(string word, vector<string> pages) {
 
     vector<pair<double, int>> v;
     
+    for (WebPage webPage : webPages)
+    {
+        v.push_back({getTotalScore(webPage), webPage.idx});
+    }
+    
     sort(v.begin(), v.end(), cmp);
 
     return v[0].second;
