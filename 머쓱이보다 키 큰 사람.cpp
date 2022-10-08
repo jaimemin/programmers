@@ -3,14 +3,11 @@
 
 using namespace std;
 
-int solution(int n) {
+int solution(vector<int> array, int height) {
     int answer = 0;
 
-    while (n)
-    {
-        answer += n % 10;
-
-        n /= 10;
+    for (int num : array) {
+        answer += (num > height);
     }
 
     return answer;
