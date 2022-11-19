@@ -2,17 +2,13 @@
 #include <vector>
 #include <cstring>
 #include <algorithm>
-#include <map>
 using namespace std;
 
 const int MAX = 1e5 + 1;
 
 const int NUMBER_MAX = 10;
 
-const int Y_MAX = 4;
-
-const int X_MAX = 3;
-
+// 자판 이동 비용을 미리 구해놓음
 const int steps[NUMBER_MAX][NUMBER_MAX] = {
     { 1, 7, 6, 7, 5, 4, 5, 3, 2, 3 },
     { 7, 1, 2, 4, 2, 3, 5, 4, 5, 6 },
@@ -26,72 +22,42 @@ const int steps[NUMBER_MAX][NUMBER_MAX] = {
     { 3, 6, 5, 4, 5, 3, 2, 4, 2, 1 }
 };
 
-typedef struct
+// DP
+// numbers.length, 왼손가락, 오른손가락이 위치한 숫자
+int cache[MAX][NUMBER_MAX][NUMBER_MAX];
+
+string copyNumbers;
+
+int func(int idx, int left, int right)
 {
-    int y, x;
-} Coord;
-
-bool operator<(Coord a, Coord b)
-{
-    if (a.y == b.y)
-    {
-        return a.x < b.x;
-    }
-
-    return a.y < b.y;
-}
-
-Coord coords[NUMBER_MAX] = { {3, 1}, {0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2} };
-
-int cache[MAX][Y_MAX][X_MAX][Y_MAX][X_MAX];
-
-map<Coord, int> coord2num;
-
-bool thumbOnNumber(Coord thumb, Coord num)
-{
-    return thumb.y == num.y && thumb.x == num.x;
-}
-
-void init()
-{
-    memset(cache, -1, sizeof(cache));
-
-    int num = 0;
-
-    for (Coord coord : coords)
-    {
-        coord2num[coord] = num++;
-    }
-}
-
-int func(int idx, Coord left, Coord right, string numbers)
-{
-    if (idx == numbers.length())
+    if (idx == copyNumbers.length())
     {
         return 0;
     }
 
-    int& result = cache[idx][left.y][left.x][right.y][right.x];
+    int& result = cache[idx][left][right];
 
     if (result != -1)
     {
         return result;
     }
 
-    int curNum = numbers[idx] - '0';
-    Coord cur = coords[curNum];
+    int cur = copyNumbers[idx] - '0';
 
-    if (thumbOnNumber(left, cur) || thumbOnNumber(right, cur))
+    // 현재 손가락이 자판에 위치하면 비용은 1
+    if (left == cur || right == cur)
     {
-        return result = 1 + func(idx + 1, left, right, numbers);
+        return result = 1 + func(idx + 1, left, right);
     }
 
-    return result = min(func(idx + 1, cur, right, numbers) + steps[coord2num[left]][curNum]
-        , func(idx + 1, left, cur, numbers) + steps[coord2num[right]][curNum]);
+    // 왼손가락 혹은 오른손가락이 움직였을 때
+    return result = min(func(idx + 1, cur, right) + steps[left][cur]
+        , func(idx + 1, left, cur) + steps[right][cur]);
 }
 
 int solution(string numbers) {
-    init();
+    memset(cache, -1, sizeof(cache));
+    copyNumbers = numbers;
 
-    return func(0, coords[4], coords[6], numbers);
+    return func(0, 4, 6);
 }
