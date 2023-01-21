@@ -2,51 +2,83 @@
 #include <vector>
 #include <algorithm>
 #include <map>
-#include <iostream>
 using namespace std;
+
+typedef struct
+{
+    int score, score2;
+    int idx;
+} Employee;
+
+bool cmp(Employee a, Employee b)
+{
+    return a.score > b.score;
+}
 
 int solution(vector<vector<int>> scores) {
     int target = scores[0][0] + scores[0][1];
-    vector<int> v;
-    v.push_back(target);
-    map<int, int> score2cnt;
-    score2cnt[target]++;
+    vector<Employee> employees;
+    int idx = 0;
     
-    
-    for (int i = 1; i < scores.size(); i++)
+    for (vector<int> score : scores)
     {
-        if (scores[i][0] > scores[0][0] 
-            && scores[i][1] > scores[0][1])
+        if (score[0] > scores[0][0] && score[1] > scores[0][1])
         {
             return -1;
         }
         
-        int sum = scores[i][0] + scores[i][1];
+        employees.push_back({ score[0], score[1], idx++ });
+    }
+    
+    sort(employees.begin(), employees.end(), cmp);
+    
+    map<int, int> sum2cnt;
+    vector<int> scoreList;
+    
+    for (int i = 0; i < employees.size(); i++)
+    {
+        bool flag = true;
+        Employee e = employees[i];
         
-        if (!score2cnt.count(sum))
+        for (int j = 0; j < i; j++)
         {
-            v.push_back(sum);
+            Employee e2 = employees[j];
+            
+            if (e2.score > e.score 
+                && e2.score2 > e.score2)
+            {
+                flag = false;
+                
+                break;
+            }
         }
         
-        score2cnt[sum]++;
+        if (flag == false)
+        {
+            continue;
+        }
+        
+        int sum = e.score + e.score2;
+        
+        if (!sum2cnt.count(sum))
+        {
+            scoreList.push_back(sum);
+        }
+        
+        sum2cnt[sum]++;
     }
     
-    sort(v.begin(), v.end());
-    
-    if (v.back() == target)
-    {
-        return 1;
-    }
+    sort(scoreList.begin(), scoreList.end());
     
     int answer = 1;
     
-    for (int i = v.size() - 1; i >= 0; i--)
+    for (int i = scoreList.size() - 1; i >= 0; i--)
     {
-        if (v[i] == target)
+        if (scoreList[i] == target)
         {
             return answer;
         }
         
-        answer += score2cnt[v[i]];
+        answer += sum2cnt[scoreList[i]];
     }
 }
