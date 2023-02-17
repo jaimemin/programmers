@@ -43,6 +43,7 @@ int solution(vector<string> maps) {
         }
     }
     
+    // 시작점에서 레버
     while (!pq.empty())
     {
         int y = pq.top().y;
@@ -85,6 +86,7 @@ int solution(vector<string> maps) {
     
     memset(visited, false, sizeof(visited));
     
+    // 레버에서 도착점
     while (!pqAfterLever.empty())
     {
         int y = pqAfterLever.top().y;
@@ -111,12 +113,6 @@ int solution(vector<string> maps) {
             if (visited[nextY][nextX] || maps[nextY][nextX] == 'X')
             {
                 continue;
-            }
-            
-            if (maps[nextY][nextX] == 'L')
-            {
-                memset(visited, false, sizeof(visited));
-                lever = true;
             }
             
             visited[nextY][nextX] = true;
