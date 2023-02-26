@@ -86,11 +86,6 @@ int solution(vector<string> board) {
         return 0;
     }
     
-    if (winnerOXCnts.oCnt + winnerOXCnts.xCnt >= 2)
-    {
-        return 0;
-    }
-    
     if (winnerOXCnts.oCnt == 1 
         && oXCnts.oCnt != oXCnts.xCnt + 1)
     {
