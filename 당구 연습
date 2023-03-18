@@ -1,0 +1,47 @@
+#include <string>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+const int INF = 987654321;
+
+// 선대칭
+int getDistance(int m, int n, int startX, int startY, int targetX, int targetY)
+{
+    int dist = INF;
+    
+    if (startX != targetX || startY <= targetY) 
+    {
+        dist = min(dist, (int)(pow(startX - targetX, 2) + pow(startY + targetY, 2)));
+    }
+    
+    if (startX >= targetX || startY != targetY) 
+    {
+        dist = min(dist, (int)(pow(startX - m * 2 + targetX, 2) + pow(startY - targetY, 2)));
+    }
+    
+    if (startX != targetX || startY >= targetY) 
+    {
+        dist = min(dist, (int)(pow(startX - targetX, 2) + pow(startY - n * 2 + targetY, 2)));
+    }
+    
+    if (startX <= targetX || startY != targetY) 
+    {
+        dist = min(dist, (int)(pow(startX + targetX, 2) + pow(startY - targetY, 2)));
+    }
+    
+    return dist;
+}
+
+vector<int> solution(int m, int n, int startX, int startY, vector<vector<int>> balls)
+{
+    vector<int> answer;
+
+    for(vector<int> ball : balls)
+    {
+        answer.push_back(getDistance(m, n, startX, startY, ball[0], ball[1]));
+    }
+    
+    return answer;
+}
