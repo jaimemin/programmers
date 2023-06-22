@@ -1,5 +1,5 @@
 -- 코드를 입력하세요
-WITH REVIEW_COUNTS AS (
+WITH MOST_REVIEW_COUNTS AS (
     SELECT
         MEMBER_ID,
         COUNT(*) AS CNT
@@ -17,9 +17,17 @@ MEMBER_IDS AS (
         MEMBER_ID,
         COUNT(*) AS CNT
     FROM
-        REVIEW_COUNTS
+    (
+        SELECT
+            MEMBER_ID,
+            COUNT(*) AS CNT
+        FROM
+            REST_REVIEW
+        GROUP BY
+            MEMBER_ID
+    ) TEMP
     WHERE
-        CNT = (SELECT CNT FROM REVIEW_COUNTS)
+        CNT = (SELECT CNT FROM MOST_REVIEW_COUNTS)
 )
 
 SELECT
