@@ -1,9 +1,14 @@
 -- 코드를 입력하세요
+WITH MAX_PRICE AS (
+    SELECT
+        MAX(PRICE) AS PRICE
+    FROM    
+        FOOD_PRODUCT
+)
+
 SELECT
     *
 FROM
     FOOD_PRODUCT
-ORDER BY
-    PRICE DESC
-LIMIT
-    1
+WHERE
+    PRICE = (SELECT PRICE FROM MAX_PRICE)
