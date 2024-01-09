@@ -42,11 +42,13 @@ int solution(int coin, vector<int> cards) {
             draw.insert(cards[nextIdx++]);
         }
         
-        if (canGoToNextRound(hands, hands))
+        if (hands.size() >= 2 && canGoToNextRound(hands, hands))
         {
             answer++;
         }
-        else if (coin >= 1 && canGoToNextRound(hands, draw))
+        else if (hands.size() >= 1 
+                 && coin >= 1 
+                 && canGoToNextRound(hands, draw))
         {
             answer++;
             coin--;
